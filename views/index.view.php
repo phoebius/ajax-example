@@ -19,109 +19,10 @@
 // master.view.php
 $this->setMaster('master');
 
+$this->renderPartial('parts/js');
+
 ?>
 
-<script type="text/javascript">
-
-var auth = { name: '', authtoken: '' }
-
-function do_login()
-{
-	authorize(get_name())
-}
-
-function do_logout()
-{
-	set_unknown();
-	auth.authtoken = '';
-	auth.name = '';
-}
-
-function do_create_dir()
-{
-	create_dir($("#dir_name").val())
-}
-
-function do_refresh()
-{
-	refresh_items()
-}
-
-function set_name(name)
-{
-	$("#logged_in_name").html(name)
-}
-
-function get_name()
-{
-	return $("#login_name").val();
-}
-
-function set_known(name)
-{
-	$("#known").show()
-	$("#extra_actions").show()
-	$("#unknown").hide()
-	set_name(name);
-}
-
-function set_unknown()
-{
-	$("#unknown").show()
-	$("#known").hide()
-	$("#extra_actions").hide()
-}
-
-// ajax requests
-function refresh_items() {
-	$("#items").html("")
-	$.getJSON(
-		"/ajax/PublicAjax/get_items/",
-		{},
-		function(data) {
-			data.items.forEach(function(v, k) {
-				append_item(v)
-			})
-		}
-	);
-}
-
-function append_item(dir)
-{
-	$("#items").append(dir + "<br />")
-}
-
-function create_dir(dir) {
-	$.getJSON(
-		"/ajax/AdminAjax/create_dir/",
-		{
-			dir: dir,
-			name: auth.name,
-			authtoken: auth.authtoken
-		},
-		function(data) {
-			if (data.error)
-				alert(data.error)
-			else {
-				append_item(dir)
-				$("#dir_name").val("")
-			}
-		}
-	)
-}
-
-function authorize(name) {
-	$.getJSON(
-		"/authorize/",
-		{ name: name },
-		function(data){
-			set_known(data.name)
-			auth.name = data.name
-			auth.authtoken = data.authtoken;
-		}
-	);
-}
-</script>
 
 <table width="100%" border="0">
 	<tr>
@@ -150,3 +51,7 @@ function authorize(name) {
 
 <div id="items">
 </div>
+
+<script type="text/javascript">
+window.onload = do_refresh;
+</script>

@@ -28,6 +28,6 @@ set_include_path(
 
 define('BUGS_EMAIL', 'bugs@host.com');
 
-define('BROWSE_ROOT', APP_ROOT . DIRECTORY_SEPARATOR . 'www' . DIRECTORY_SEPARATOR . 'tmp');
+define('BROWSE_ROOT', APP_ROOT . DIRECTORY_SEPARATOR . 'tmp');
 
 ?>

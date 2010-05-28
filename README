@@ -1,0 +1,54 @@
+     Phoebius framework: an AJAX-integrated application
+             Copyright (c) 2010 Scand ltd.
+
+
+This application shows how to create a web application that uses
+AJAX and JSON for retrieving data through the background requests.
+
+
+A brief description of the layout:
+
+www/
+	HTTP root your web-server's virtual host should point to.
+	It also can be called htdocs is you are using Apache.
+
+www/index.php
+	an entry point, or a so-called ``front-controller''.
+	www/.htaccess uses mod_rewrite to route	all incoming requests
+	(excluding requests to the existing	files) to index.php
+	The front controller initializes the environment of the
+	application	by loading configuration files and then running
+	a custom StandaloneSiteApplicatinon class which wraps the
+	environment with the objects and then bootstraps
+	Phoebius subsystems (routing and MVC).
+
+etc/config.php
+	application-scope configuration file. This config defines
+	environment independent settings.
+
+cfg/default/
+	configuration slot for "default" environment. These configurations
+	may be separate for different servers (development, production,
+	etc). So force Phoebius load a custom configuration slot,
+	you can define an PHOEBIUS_APP_SLOT environment variable or
+	rewrite a loader code inside www/index.php.
+
+externals/phoebius/
+	Phoebius framework v1.2.0 distribution.
+
+lib/
+	a directory where application classes reside.
+
+lib/Mvc/ApplicationRouter.class.php
+	class which defines an route table for routing requests
+	to the corresponding controllers and actions
+
+lib/Mvc/Controllers/
+	a collection of controllers that actually handle the incoming
+	requests
+
+views/
+	page templates. In particular: views/index.view.php represents
+	a content of the displaying page; views/master.view.php
+	is a header/footer wrapper of the content.
+
