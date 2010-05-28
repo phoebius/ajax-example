@@ -6,8 +6,6 @@ This application shows how to create a web application that uses
 AJAX and JSON for retrieving data through the background requests.
 
 
-A brief description of the layout:
-
 www/
 	HTTP root your web-server's virtual host should point to.
 	It also can be called htdocs is you are using Apache.

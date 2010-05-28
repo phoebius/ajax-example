@@ -1,0 +1,42 @@
+     Phoebius framework: an AJAX-integrated application
+             Copyright (c) 2010 Scand ltd.
+
+INSTALLING APPLICATION
+======================
+
+Extract the contents and create a virtual host at your web-server
+so that its HTTP root will point to www/ (or rename it to htdocs
+if needed). Set the desired host name (e.g., localhost).
+
+Make tmp/ directory writable:
+$ chmod 777 tmp/
+
+Application is installed. You can now access it using your browser
+by the specified host name.
+
+If something gone wrong, consider the web-server logs (e.g.,
+/var/log/apache2/error.log).
+
+
+SETTING APACHE WEB-SERVER
+=========================
+
+The application uses .htaccess and Apache's mod_rewrite to force
+requests to be passed to the front-controller (www/index.php).
+
+Just make sure that mod_rewrite is correctly installed and
+enabled for Apache.
+
+For ubuntu users, the commands are the following:
+$ sudo a2enmod rewrite
+
+
+SETTING A DIFFERENT WEB-SERVER
+==============================
+
+
+If you are using any other web-server, you need  to manually set up
+a virtual host so that it will pass the requests to front-controller
+using other a web-server facilities.
+
+For nginx or lighthttpd it is a configuration file.
