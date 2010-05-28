@@ -1,0 +1,110 @@
+<!--
+ * ***********************************************************************************************
+ *
+ * Phoebius Framework
+ *
+ * **********************************************************************************************
+ *
+ * Copyright (c) 2009 Scand Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms
+ * of the GNU Lesser General Public License as published by the Free Software Foundation;
+ * either version 3 of the License, or (at your option) any later version.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with
+ * this program; if not, see <http://www.gnu.org/licenses/>.
+ *
+ *************************************************************************************************
+-->
+
+<!ELEMENT domain (entities*)>
+<!ATTLIST domain
+	db-schema		CDATA #IMPLIED
+>
+
+<!ELEMENT entities (entity*)>
+
+<!ELEMENT entity (properties*)>
+<!ATTLIST entity
+	name			ID #REQUIRED
+	has-dao			(true|false) "true"
+	db-schema		NMTOKEN #IMPLIED
+	db-table		NMTOKEN #IMPLIED
+>
+
+<!ELEMENT properties (identifier?, property*, container*)>
+
+<!ELEMENT param EMPTY>
+<!ATTLIST param
+	name			NMTOKEN #REQUIRED
+	value			CDATA #REQUIRED
+>
+
+<!ELEMENT identifier (param*)>
+<!ATTLIST identifier
+	name			NMTOKEN "id"
+	type			NMTOKEN "uint32"
+	size			NMTOKEN #IMPLIED
+	precision		NMTOKEN #IMPLIED
+	scale			NMTOKEN #IMPLIED
+	nullable		(true|false) #IMPLIED 
+	generated		(true|false) "true"
+	db-columns		NMTOKENS #IMPLIED
+>
+
+<!--
+= "type" attribute possible values =
+
+1. DBType identifier
+2. name of the class that implements:
+   - IDaoRelated
+   - IOrmRelated
+   - IOrmPropertyAssignable
+   - IBoxable
+3. name of the class with public ctor
+
+Simple example:
+<property name="name" type="varchar" size="255" multiplicity="zeroOrOne"/>
+
+Extended example with the same result:
+<property name="name" type="DBType">
+	<param name="id" value="varchar">
+	<param name="size" value="255">
+	<param name="nullable" value="true">
+</property>
+-->
+<!ELEMENT property (param*)>
+<!ATTLIST property
+	name			NMTOKEN #REQUIRED
+	type			NMTOKEN #REQUIRED
+	
+	size			NMTOKEN #IMPLIED
+	precision		NMTOKEN #IMPLIED
+	scale			NMTOKEN #IMPLIED
+	nullable		(true|false) #IMPLIED
+	
+	visibility		(full|readonly|transparent) "full"
+	unique			(true|false) "false"
+	multiplicity	(zeroOrOne|exactlyOne) "exactlyOne"
+	db-columns		NMTOKENS #IMPLIED
+>
+
+<!--
+Container works like a typical property except that:
+ - it does not store a value, it only refers to a bunch of entities
+ - its visibility is readonly
+ - it is always not unique
+ - relation (1:*, *:*) is determined by a refs attribute:
+   - if refs contains a name of an existing property of an entity referenced in a "type" attribute
+     then it is OneToMany relation
+   - otherwise refs is treated as a name an automatically built proxy entity which represent
+     a ManyToMany relation. Such a proxy entity is not obligatory to be defined in a domain. This
+     proxy entity at least contains an association properties to the ends of the relation
+ -->
+<!ELEMENT container EMPTY>
+<!ATTLIST container
+	name			NMTOKEN #REQUIRED
+	type			NMTOKEN #REQUIRED
+	refs			NMTOKEN "id"
+>
+
