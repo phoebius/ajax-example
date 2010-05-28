@@ -16,8 +16,12 @@
  *
  ************************************************************************************************/
 
-class AdminAjaxController extends AccessAjaxController
+// handles common admin requests (authentication is performed
+// by the base controller)
+class AdminAjaxController extends AuthenticationAjaxController
 {
+	// creates a directory at BROWSE_ROOT
+	// correct result: { created: true }
 	function action_create_dir($dir)
 	{
 		if (
@@ -30,6 +34,10 @@ class AdminAjaxController extends AccessAjaxController
 
 		if (false !== strpos('.', $dir)) {
 			return 'dir cannot contain dots';
+		}
+
+		if (is_dir(BROWSE_ROOT . DIRECTORY_SEPARATOR . $dir)) {
+			return 'dir already exists';
 		}
 
 		try {

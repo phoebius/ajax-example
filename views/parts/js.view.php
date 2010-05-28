@@ -109,12 +109,16 @@ function create_dir(dir) {
 
 function authorize(name) {
 	$.getJSON(
-		"/authorize/",
+		"/ajax/PublicAjax/authorize/",
 		{ name: name },
 		function(data){
-			set_known(data.name)
-			auth.name = data.name
-			auth.authtoken = data.authtoken;
+			if (data.error)
+				alert(data.error)
+			else {
+				set_known(data.name)
+				auth.name = data.name
+				auth.authtoken = data.authtoken;
+			}
 		}
 	);
 }

@@ -16,6 +16,12 @@
  *
  ************************************************************************************************/
 
+// simplifies handling ajax requests by wrapping the results of
+// defined action methods
+// action method may produce the following results:
+//  - array - it will be converted to JSON
+//  - string - it will be treated as an error message and will be wrapped by an object
+//             and then converted to json: { error: <string> }
 abstract class AbstractAjaxController extends AbstractCommonController
 {
 	// allow action methods to returns the following values:

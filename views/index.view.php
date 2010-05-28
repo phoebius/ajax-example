@@ -28,7 +28,7 @@ $this->renderPartial('parts/js');
 	<tr>
 		<td width="50%">
 			<input type="button" name="refresh" value="Refresh" onclick="do_refresh()" />
-			<span id="extra_actions">
+			<span id="extra_actions" style="display:none">
 				<input type="text" name="dir_name" id="dir_name" value="" />
 				<input type="button" name="create_dir" value="Create dir" onclick="do_create_dir()" />
 			</span>
